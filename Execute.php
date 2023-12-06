@@ -4,8 +4,13 @@ class AOCClass
 {
     public function importData()
     {
-        $file = file_get_contents('./input', true);
-        return explode(PHP_EOL, $file);
+        $fileData = file('./input', FILE_IGNORE_NEW_LINES);
+
+        if (!is_array($fileData)) {
+            return [];
+        }
+
+        return $fileData;
     }
 
     /* Helper Funktionen - Start */
@@ -70,36 +75,16 @@ class AOCClass
     }
 
     public function Aufgabe01_B() {
-        $data = $this->importData();
-        $values = [];
+        $digitPairs = [];
 
-        foreach($data as $row){
-            $row_fixed = $this->convertTextNumbers($row);
-echo($row.' -> '.$row_fixed);
-            $row_array = str_split($row_fixed);
+        //do Magic here...
 
-            $numbers_in_row = [];
-            foreach($row_array as $character){
-                if(is_numeric($character)){
-                    $numbers_in_row[] = $character;
-                }
-            }
-
-            $anzahl_nummern = count($numbers_in_row);
-
-            if($anzahl_nummern === 1){
-                $values[] = (int)($numbers_in_row[0].$numbers_in_row[0]);
-            } else {
-                $values[] = (int)($numbers_in_row[0].$numbers_in_row[$anzahl_nummern-1]);
-            }
-        }
-
-        return array_sum($values);
+        return array_sum($digitPairs);
     }
 
     public function output() {
-        $this->Aufgabe01_B();
-//        var_dump($this->Aufgabe01_B());
+        var_dump($this->Aufgabe01_B());
+        var_dump($this->Aufgabe01_B()); //Korrektes Ergebnis wäre 53866
     }
 }
 
